@@ -1,59 +1,27 @@
-# lockheed
+# Fix Touchpad Issues on a Dell Laptop
 
-Run tasks automatically when you unlock your computer screen on Ubuntu Linux.
+Problem: Scrolling and other gestures do not work. To fix this, you need to reload `i2c_hid_acpi` after every unlock.
 
-## Basic Usage
+## Fix
 
-Every time the screen unlocks, echo `foo bar baz` to the standard output.
+1. Clone this Repo
+2. Move the `reloadTouchpad.sh` to a safe location and replace `YOUR_PASSWORD_HERE` with your password
+3. Move `unlock.service` to `~/.config/systemd/user` (if this directory does not exists create it)
+4. Replace `PATH_TO_YOUR_RELOADTOUCHPAD_SH` with the path to your `reloadTouchpad.sh` in the `unlock.service` file
+5. Move `reloadTouchpadDriverOnBoot.service` to `/etc/systemd/system`
+6. Replace `PATH_TO_YOUR_RELOADTOUCHPAD_SH` with the path to your `reloadTouchpad.sh` in the `reloadTouchpadDriverOnBoot.service` file
+7. Copy `lockheed` to `/usr/local/bin`
+8. Make `lockheed` executable: `sudo chmod +x lockheed`
+9. Enable both services:
 
-```sh
-$ lockheed echo foo bar baz
-```
-
-After the next screen unlock, wait 5 seconds and then run a custom
-script.
-
-```sh
-$ lockheed --once -c 'sleep 5 && ./myscript'
-```
-
-Get some help.
-
-```sh
-$ lockheed --help
-```
-
-## Installation
-
-Copy the `lockheed` script to an appropriate place on your `PATH`, *e.g.*
-`/usr/loca/bin/`.
-
-## Advanced Usage
-
-To create a [systemd](https://www.freedesktop.org/wiki/Software/systemd/)
-user service which does some useful actions when you unlock your
-computer, you can create a [service unit](https://man7.org/linux/man-pages/man5/systemd.service.5.html)
-file such as `unlock.service`:
-
-```sh
-[Unit]
-Description=My Screen Unlock Actions
-
-[Service]
-ExecStart=lockheed -c 'myscript myarg1 myarg2'
-Restart=on-failure
-RestartSec=3s
-
-[Install]
-WantedBy=graphical-session.target
-```
-
-Copy `unlock.service` to an appropriate directory for systemd user
-scripts on your system, for example `~/.config/systemd/user/` and
-enable and start it in the usual way. Boom!
+   ```
+   systemctl --user enable unlock.service
+   sudo systemctl enable reloadTouchpadDriverOnBoot.service
+   ```
+10. Reboot and your touchpad should now support scrolling & gestures.
 
 ## Caveats
 
-Tested and working on Ubuntu 20.04 running Gnome 3.36.8. If it does not
-work on your distro, version, or desktop environment, please make it so
-and submit a pull request!
+Fix tested with Arch (6.4.2-arch1-1) and Gnome 44.3. **USE THIS AR YOUR OWN RISK!**
+
+Thanks to [gogama](https://github.com/gogamagogam) for creating [lockheed](https://github.com/gogama/lockheed)

@@ -1,0 +1,10 @@
+[Unit]
+Description=Reload i2c_hid_acpi on unlock
+
+[Service]
+ExecStart=lockheed -c PATH_TO_YOUR_RELOADTOUCHPAD_SH
+Restart=on-failure
+RestartSec=3s
+
+[Install]
+WantedBy=graphical-session.target

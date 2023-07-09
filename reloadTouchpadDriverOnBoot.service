@@ -1,0 +1,8 @@
+[Unit]
+Description=Reload Touchpad-Driver
+
+[Service]
+ExecStart=PATH_TO_YOUR_RELOADTOUCHPAD_SH
+
+[Install]
+WantedBy=default.target
