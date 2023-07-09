@@ -22,6 +22,6 @@ Problem: Scrolling and other gestures do not work. To fix this, you need to relo
 
 ## Caveats
 
-Fix tested with Arch (6.4.2-arch1-1) and Gnome 44.3. **USE THIS AR YOUR OWN RISK!**
+Fix tested with Arch (6.4.2-arch1-1) and Gnome 44.3. **USE THIS AT YOUR OWN RISK!**
 
 Thanks to [gogama](https://github.com/gogamagogam) for creating [lockheed](https://github.com/gogama/lockheed)
